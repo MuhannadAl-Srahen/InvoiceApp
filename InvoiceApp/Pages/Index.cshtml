@@ -1,0 +1,47 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Invoice Management System";
+}
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Welcome to Invoice Management</h1>
+        <p class="lead text-muted">
+            Simplify your billing process and keep track of your invoices effortlessly.
+        </p>
+        <a href="/Invoices/Index" class="btn btn-primary btn-lg mt-3">
+            View Invoices &rarr;
+        </a>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Create New Invoice</h5>
+                    <p class="card-text">Add new invoices quickly and easily to keep your records up-to-date.</p>
+                    <a href="/Invoices/Create" class="btn btn-outline-primary">Create Invoice</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Invoices</h5>
+                    <p class="card-text">Edit, delete, and search through all your invoices with ease.</p>
+                    <a href="/Invoices/Index" class="btn btn-outline-primary">Manage Invoices</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Reports & Analytics</h5>
+                    <p class="card-text">Get insights on your sales and payment statuses.</p>
+                    <a href="/Reports" class="btn btn-outline-primary disabled" aria-disabled="true">Coming Soon</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

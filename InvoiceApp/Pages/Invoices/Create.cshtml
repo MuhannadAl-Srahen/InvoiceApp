@@ -1,0 +1,152 @@
+﻿@page
+@model InvoiceApp.Pages.Invoices.CreateModel
+@{
+}
+
+<h2 class="text-center mb-5 fw-bold text-primary">Create New Invoice</h2>
+
+<form method="post" class="mx-auto" style="max-width: 900px;">
+    <div class="row g-4 mb-5">
+        <!-- Invoice Details -->
+        <div class="col-lg-6">
+            <div class="card shadow rounded-4 border-0 h-100">
+                <div class="card-header bg-primary text-white fw-semibold rounded-top-4">
+                    Invoice Details
+                </div>
+                <div class="card-body p-4">
+                    <div class="mb-4 row align-items-center">
+                        <label class="col-sm-4 col-form-label fw-semibold">Invoice No</label>
+                        <div class="col-sm-8">
+                            <input class="form-control form-control-lg border-primary" asp-for="InvoiceDto.Number" placeholder="e.g. INV-001" />
+                            <span asp-validation-for="InvoiceDto.Number" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4 row align-items-center">
+                        <label class="col-sm-4 col-form-label fw-semibold">Payment Status</label>
+                        <div class="col-sm-8">
+                            <select class="form-select form-select-lg border-primary" asp-for="InvoiceDto.Status">
+                                <option value="Pending">Pending</option>
+                                <option value="Paid">Paid</option>
+                            </select>
+                            <span asp-validation-for="InvoiceDto.Status" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4 row align-items-center">
+                        <label class="col-sm-4 col-form-label fw-semibold">Issue Date</label>
+                        <div class="col-sm-8">
+                            <input class="form-control form-control-lg border-primary" type="date" asp-for="InvoiceDto.IssueDate" />
+                            <span asp-validation-for="InvoiceDto.IssueDate" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center">
+                        <label class="col-sm-4 col-form-label fw-semibold">Due Date</label>
+                        <div class="col-sm-8">
+                            <input class="form-control form-control-lg border-primary" type="date" asp-for="InvoiceDto.DueDate" />
+                            <span asp-validation-for="InvoiceDto.DueDate" class="text-danger small"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Details -->
+        <div class="col-lg-6">
+            <div class="card shadow rounded-4 border-0 h-100">
+                <div class="card-header bg-primary text-white fw-semibold rounded-top-4">
+                    Client Details
+                </div>
+                <div class="card-body p-4">
+                    <div class="mb-4 row align-items-center">
+                        <label class="col-sm-4 col-form-label fw-semibold">Client</label>
+                        <div class="col-sm-8">
+                            <input class="form-control form-control-lg border-primary" asp-for="InvoiceDto.ClinetName" placeholder="Client full name" />
+                            <span asp-validation-for="InvoiceDto.ClinetName" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4 row align-items-center">
+                        <label class="col-sm-4 col-form-label fw-semibold">Email</label>
+                        <div class="col-sm-8">
+                            <input class="form-control form-control-lg border-primary" type="email" asp-for="InvoiceDto.Email" placeholder="client@example.com" />
+                            <span asp-validation-for="InvoiceDto.Email" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4 row align-items-center">
+                        <label class="col-sm-4 col-form-label fw-semibold">Phone</label>
+                        <div class="col-sm-8">
+                            <input class="form-control form-control-lg border-primary" asp-for="InvoiceDto.Phone" placeholder="+963 9xx xxx xxx" />
+                            <span asp-validation-for="InvoiceDto.Phone" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center">
+                        <label class="col-sm-4 col-form-label fw-semibold">Address</label>
+                        <div class="col-sm-8">
+                            <input class="form-control form-control-lg border-primary" asp-for="InvoiceDto.Address" placeholder="Client address" />
+                            <span asp-validation-for="InvoiceDto.Address" class="text-danger small"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Details -->
+    <div class="card shadow rounded-4 border-0 mb-5">
+        <div class="card-header bg-primary text-white fw-semibold rounded-top-4">
+            Service Details
+        </div>
+        <div class="card-body p-4">
+            <div class="row g-4 align-items-end">
+
+                <div class="col-lg-6">
+                    <label class="form-label fw-semibold" for="serviceInput">Service</label>
+                    <input id="serviceInput" class="form-control form-control-lg border-primary" asp-for="InvoiceDto.Service" placeholder="Service description" />
+                    <span asp-validation-for="InvoiceDto.Service" class="text-danger small"></span>
+                </div>
+
+                <div class="col-lg-2 col-sm-4">
+                    <label class="form-label fw-semibold" for="quantityInput">Quantity</label>
+                    <input id="quantityInput" class="form-control form-control-lg border-primary" type="number" step="any" min="0" asp-for="InvoiceDto.Quantity" oninput="updateTotalPrice()" placeholder="0" />
+                    <span asp-validation-for="InvoiceDto.Quantity" class="text-danger small"></span>
+                </div>
+
+                <div class="col-lg-2 col-sm-4">
+                    <label class="form-label fw-semibold" for="unitPriceInput">Unit Price</label>
+                    <input id="unitPriceInput" class="form-control form-control-lg border-primary" type="number" step="any" min="0" asp-for="InvoiceDto.UnitPrice" oninput="updateTotalPrice()" placeholder="0.00" />
+                    <span asp-validation-for="InvoiceDto.UnitPrice" class="text-danger small"></span>
+                </div>
+
+                <div class="col-lg-2 col-sm-4">
+                    <label class="form-label fw-semibold" for="totalPriceInput">Total Price</label>
+                    <input id="totalPriceInput" class="form-control form-control-lg bg-light text-primary fw-bold" disabled />
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex gap-3 justify-content-start">
+        <button type="submit" class="btn btn-lg btn-primary px-5 shadow-sm">Submit</button>
+        <a class="btn btn-lg btn-outline-primary px-5 shadow-sm" asp-page="/Invoices/Index" role="button">Cancel</a>
+    </div>
+</form>
+
+<script>
+    function updateTotalPrice() {
+        const quantity = parseFloat(document.getElementById("quantityInput").value);
+        const unitPrice = parseFloat(document.getElementById("unitPriceInput").value);
+
+        let totalPrice = 0;
+        if (!isNaN(quantity) && !isNaN(unitPrice) && quantity >= 0 && unitPrice >= 0) {
+            totalPrice = quantity * unitPrice;
+        }
+        document.getElementById("totalPriceInput").value = totalPrice.toFixed(2);
+    }
+
+    updateTotalPrice();
+</script>
